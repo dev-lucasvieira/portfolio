@@ -172,11 +172,9 @@ section {
 
 
 .titulo {
-
     text-align: center;
     font-size: 35px;
-    margin-bottom: 30px;
-
+    margin-bottom: 60px;
 }
 
 
@@ -198,6 +196,7 @@ section {
     justify-content: center;
     flex-wrap: wrap;
     gap: 20px;
+    text-align: center;
 
 }
 
@@ -211,6 +210,16 @@ section {
 
 }
 
+.card h3 {
+    margin-bottom: 15px;
+    color: #00ff88;
+}
+
+
+.card p {
+    line-height: 1.6;
+}
+
 
 
 
@@ -218,7 +227,7 @@ section {
 
     display: flex;
     justify-content: center;
-    gap: 25px;
+    gap: 40px;
     flex-wrap: wrap;
 
 }
@@ -238,9 +247,19 @@ section {
 
 .card a {
 
-    display: inline-block;
-    margin-top: 20px;
+    display: block;
+    margin: 25px auto 0;
+
+    width: fit-content;
+
     color: #00ff88;
+    text-decoration: none;
+
+    padding: 8px 20px;
+    border: 1px solid #00ff88;
+    border-radius: 20px;
+
+    transition: 0.3s;
 
 }
 
@@ -447,4 +466,53 @@ button{
     cursor:pointer;
 
 }
+#typing {
+    font-family: monospace;
+    font-size: 16px;
+    color: #fff;
+    white-space: nowrap;
+}
 
+#typing::after {
+    content: "|";
+    animation: cursor 0.7s infinite;
+}
+
+@keyframes cursor {
+    50% {
+        opacity: 0;
+    }
+}
+
+/* ==========================
+   STATUS DIGITAÇÃO
+========================== */
+
+.status {
+    display: inline-block;
+    margin-top: 15px;
+    background: rgba(0, 255, 136, 0.12);
+    border: 1px solid rgba(0, 255, 136, 0.3);
+    padding: 8px 14px;
+    border-radius: 20px;
+    color: #00ff88;
+    font-family: monospace;
+    font-size: 14px;
+}
+
+
+#typing {
+    display: inline-block;
+    margin-top: 15px;
+
+    background: rgba(0, 255, 136, 0.12);
+    color: #00ff88;
+
+    padding: 8px 14px;
+    border-radius: 10px;
+
+    border: 1px solid rgba(0, 255, 136, 0.3);
+
+    font-family: monospace;
+    font-size: 14px;
+}
