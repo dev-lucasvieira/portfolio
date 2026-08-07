@@ -1,181 +1,138 @@
-console.log("SCRIPT JS CARREGOU!");
+console.log("SYSTEM.JS carregado!");
 
+const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 // ==========================
-// ANO FOOTER
+// BOOT SEQUENCE
+// ==========================
+
+const bootScreen = document.getElementById("bootScreen");
+const bootLog = document.getElementById("bootLog");
+const bootBarFill = document.getElementById("bootBarFill");
+
+const linhasBoot = [
+    "> INICIANDO PERFIL_LUCAS.SYS",
+    "> CARREGANDO MÓDULOS: HTML / CSS / JS / REACT / NODE",
+    "> VERIFICANDO CONEXÃO... OK",
+    "> ACESSO CONCEDIDO"
+];
+
+function rodarBoot() {
+    if (!bootScreen || !bootLog) return;
+
+    if (reducedMotion) {
+        bootScreen.classList.add("hide");
+        return;
+    }
+
+    let i = 0;
+
+    function proximaLinha() {
+        if (i < linhasBoot.length) {
+            bootLog.innerHTML += (i > 0 ? "\n" : "") + linhasBoot[i];
+            i++;
+            setTimeout(proximaLinha, 380);
+        } else {
+            if (bootBarFill) bootBarFill.style.width = "100%";
+            setTimeout(() => bootScreen.classList.add("hide"), 700);
+        }
+    }
+
+    if (bootBarFill) bootBarFill.style.width = "35%";
+    proximaLinha();
+}
+
+rodarBoot();
+
+// ==========================
+// RELÓGIO DO SISTEMA
+// ==========================
+
+const clock = document.getElementById("clock");
+
+function atualizarRelogio() {
+    if (!clock) return;
+    const agora = new Date();
+    const hh = String(agora.getHours()).padStart(2, "0");
+    const mm = String(agora.getMinutes()).padStart(2, "0");
+    const ss = String(agora.getSeconds()).padStart(2, "0");
+    clock.textContent = `${hh}:${mm}:${ss}`;
+}
+
+atualizarRelogio();
+setInterval(atualizarRelogio, 1000);
+
+// ==========================
+// ANO NO FOOTER
 // ==========================
 
 const footer = document.querySelector("footer p");
 
-if(footer){
-
+if (footer) {
     const ano = new Date().getFullYear();
-
-    footer.innerHTML =
-    `© ${ano} Lucas Vieira - Desenvolvedor Web`;
-
+    footer.innerHTML = `© ${ano} Lucas Vieira — Desenvolvedor Web`;
 }
 
-
-
 // ==========================
-// EFEITO DIGITAÇÃO
+// EFEITO DE DIGITAÇÃO (cargo)
 // ==========================
 
-const elementoTexto = document.querySelector(".texto h2");
+const elementoTexto = document.getElementById("typedRole");
 
-
-if(elementoTexto){
-
+if (elementoTexto) {
     const texto = "Desenvolvedor Web em formação";
-
     let index = 0;
 
-    elementoTexto.innerHTML = "";
-
-
-    function escrever(){
-
-        if(index < texto.length){
-
-            elementoTexto.innerHTML += texto.charAt(index);
-
+    function escrever() {
+        if (index < texto.length) {
+            elementoTexto.textContent += texto.charAt(index);
             index++;
-
-            setTimeout(escrever,80);
-
+            setTimeout(escrever, 70);
         }
-
     }
 
-
-    escrever();
-
+    setTimeout(escrever, reducedMotion ? 0 : 1900);
 }
-
-
 
 // ==========================
 // ANIMAÇÕES AO ROLAR
 // ==========================
 
-const elementos = document.querySelectorAll(
-".hero, section, .card, .cards div"
-);
+const elementos = document.querySelectorAll(".hud-panel, .card, .cards div");
 
-
-if(elementos.length){
-
-    const observer = new IntersectionObserver((entradas)=>{
-
-
-        entradas.forEach((entrada)=>{
-
-
-            if(entrada.isIntersecting){
-
+if (elementos.length) {
+    const observer = new IntersectionObserver((entradas) => {
+        entradas.forEach((entrada) => {
+            if (entrada.isIntersecting) {
                 entrada.target.classList.add("mostrar");
-
             }
-
-
         });
+    }, { threshold: 0.15 });
 
-
-    },{
-        threshold:0.15
-    });
-
-
-
-    elementos.forEach((elemento)=>{
-
+    elementos.forEach((elemento) => {
         elemento.classList.add("animar");
-
         observer.observe(elemento);
-
     });
-
 }
 
-
-
 // ==========================
-// BOTÕES
+// RETÍCULA (CURSOR HUD)
 // ==========================
 
-const botoes = document.querySelectorAll("a");
+const reticle = document.getElementById("reticle");
 
+if (reticle && window.matchMedia("(hover: hover)").matches) {
 
-botoes.forEach(botao=>{
-
-
-    botao.addEventListener("mouseenter",()=>{
-
-        botao.style.transform="scale(1.08)";
-
+    document.addEventListener("mousemove", (event) => {
+        reticle.style.left = event.clientX + "px";
+        reticle.style.top = event.clientY + "px";
+        reticle.classList.add("show");
     });
 
+    const alvos = document.querySelectorAll("a, button, .card, .cards div");
 
-    botao.addEventListener("mouseleave",()=>{
-
-        botao.style.transform="scale(1)";
-
+    alvos.forEach((alvo) => {
+        alvo.addEventListener("mouseenter", () => reticle.classList.add("lock"));
+        alvo.addEventListener("mouseleave", () => reticle.classList.remove("lock"));
     });
-
-
-});
-
-
-
-
-// ==========================
-// CURSOR PERSONALIZADO
-// ==========================
-
-
-const cursor = document.querySelector(".cursor");
-
-
-console.log("Cursor:", cursor);
-
-
-
-if(cursor){
-
-
-    document.addEventListener("mousemove",(event)=>{
-
-
-        cursor.style.left = event.clientX + "px";
-
-        cursor.style.top = event.clientY + "px";
-
-
-    });
-
-
 }
-const links = document.querySelectorAll("a, button");
-
-
-links.forEach(link=>{
-
-    link.addEventListener("mouseenter",()=>{
-
-        cursor.style.width="21px";
-        cursor.style.height="21px";
-        cursor.style.background="#ffffff";
-
-    });
-
-
-    link.addEventListener("mouseleave",()=>{
-
-        cursor.style.width="25px";
-        cursor.style.height="25px";
-        cursor.style.background="#10c973";
-
-    });
-
-});
