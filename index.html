@@ -724,6 +724,9 @@ footer{
 </footer>
 
 <script>
+if('scrollRestoration' in history){
+  history.scrollRestoration = 'manual';
+}
 document.getElementById('year').textContent = new Date().getFullYear();
 
 console.log('%cOlá, recrutador(a)! 👋', 'color:#e8b975; font-size:16px; font-weight:bold;');
@@ -792,7 +795,8 @@ window.addEventListener('load', drawConstellation);
 window.addEventListener('resize', drawConstellation);
 
 /* ---------- Project node click ---------- */
-function toggleProject(nodeId, detailId){
+function toggleProject(nodeId, detailId, opts){
+  opts = opts || {};
   const node = document.getElementById(nodeId);
   const detail = document.getElementById(detailId);
   const isActive = detail.classList.contains('active');
@@ -804,7 +808,9 @@ function toggleProject(nodeId, detailId){
     detail.classList.add('active');
     node.classList.add('active');
     node.setAttribute('aria-expanded','true');
-    detail.scrollIntoView({behavior:'smooth', block:'nearest'});
+    if(opts.scroll !== false){
+      detail.scrollIntoView({behavior:'smooth', block:'nearest'});
+    }
   }
 }
 
@@ -821,7 +827,7 @@ function toggleProject(nodeId, detailId){
 
 // open first project by default on larger screens
 if(window.innerWidth > 720){
-  toggleProject('star-1','detail-star-1');
+  toggleProject('star-1','detail-star-1', {scroll:false});
 }
 
 /* ---------- Three.js ambient starfield background ---------- */
