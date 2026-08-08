@@ -1,9 +1,5 @@
 # 🚀 Lucas Vieira | Portfólio Web
 
-<p align="center">
-  <img src="img/Foto.png" width="150" style="border-radius:50%">
-</p>
-
 <h3 align="center">
 Desenvolvedor Web em formação
 </h3>
@@ -62,10 +58,10 @@ Estudando:
 ## 📱 Contato
 
 GitHub:
-https://github.com/lkzOld
+https://github.com/dev-lucasvieira
 
 LinkedIn:
-seu-link-do-linkedin
+https://www.linkedin.com/in/dev-lucasvieira/
 
 ---
 
