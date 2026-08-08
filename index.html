@@ -27,13 +27,14 @@
 
 *{margin:0;padding:0;box-sizing:border-box;}
 
-html{scroll-behavior:smooth;}
+html{scroll-behavior:smooth; overflow-x:hidden; max-width:100%;}
 
 body{
   background:var(--bg);
   color:var(--text);
   font-family:var(--font-body);
   overflow-x:hidden;
+  max-width:100%;
   line-height:1.6;
 }
 
@@ -153,6 +154,7 @@ h2{
 /* ---------- HERO ---------- */
 #hero{
   min-height:100vh;
+  min-height:100dvh;
   display:flex;
   flex-direction:column;
   justify-content:center;
@@ -530,6 +532,47 @@ footer{
   *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
 }
 
+/* ---------- MOBILE REFINEMENTS ---------- */
+@media (max-width:600px){
+  .wrap{padding:0 20px;}
+
+  nav{padding:18px 20px;}
+
+  section{padding:100px 0 70px;}
+
+  h1{font-size:clamp(36px,11vw,52px); letter-spacing:-1px;}
+
+  .hero-role{font-size:14px;}
+
+  .hero-cta{gap:12px;}
+  .btn{padding:13px 20px; font-size:12px;}
+
+  .scroll-cue{left:20px; bottom:28px;}
+
+  h2{font-size:28px;}
+
+  .constellation{height:300px; margin-bottom:16px;}
+
+  .star-node{width:96px;}
+  .star-node .star-name{font-size:14px;}
+  .star-node .star-cat{font-size:9px;}
+  .star-dot{width:11px;height:11px;margin-bottom:10px;}
+
+  #star-1{top:26%; left:30%;}
+  #star-2{top:70%; left:66%;}
+
+  .project-detail{padding:26px 22px;}
+  .project-detail-head h3{font-size:22px;}
+
+  .skill-row{grid-template-columns:96px 1fr; gap:12px;}
+  .skill-name{font-size:12px;}
+
+  .contact-grid{grid-template-columns:1fr;}
+  .contact-card{padding:24px;}
+
+  footer{padding:40px 20px 30px;}
+}
+
 ::selection{background:var(--gold);color:#0a0d18;}
 
 :focus-visible{
@@ -795,6 +838,8 @@ function initStarfield(){
   renderer = new THREE.WebGLRenderer({canvas, alpha:true, antialias:true});
   renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
   renderer.setSize(window.innerWidth, window.innerHeight);
+  canvas.style.width = '100%';
+  canvas.style.height = '100%';
 
   const starCount = 1400;
   const positions = new Float32Array(starCount*3);
@@ -841,6 +886,9 @@ function onResize(){
   camera.aspect = window.innerWidth/window.innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.domElement.style.width = '100%';
+  renderer.domElement.style.height = '100%';
+  drawConstellation();
 }
 
 function onMouseMove(e){
